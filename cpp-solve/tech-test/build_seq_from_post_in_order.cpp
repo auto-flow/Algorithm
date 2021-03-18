@@ -10,31 +10,31 @@ using namespace std;
 typedef long long ll;
 const double pi = acos(-1);
 
-class BTNode {
+class TreeNode {
 public:
     int val;
-    BTNode *left;
-    BTNode *right;
+    TreeNode *left;
+    TreeNode *right;
 
-    BTNode() {
+    TreeNode() {
         this->left = nullptr;
         this->right = nullptr;
         val = -1;
     };
 
-    BTNode(int val) {
+    TreeNode(int val) {
         this->left = nullptr;
         this->right = nullptr;
         this->val = val;
     };
 
-    BTNode(int val, BTNode *left, BTNode *right) {
+    TreeNode(int val, TreeNode *left, TreeNode *right) {
         this->left = left;
         this->right = right;
         this->val = val;
     };
 
-    void printBT(const std::string &prefix, const BTNode *node, bool isLeft) {
+    void printBT(const std::string &prefix, const TreeNode *node, bool isLeft) {
         if (node != nullptr) {
             std::cout << prefix;
 
@@ -76,21 +76,21 @@ void setPre(int ps,int pe,int is,int ie){
     }
 }
 
-void preorder(BTNode *node) {
+void preorder(TreeNode *node) {
     if (node == nullptr) return;
     printf("%d, ", node->val);
     preorder(node->left);
     preorder(node->right);
 }
 
-void inorder(BTNode *node) {
+void inorder(TreeNode *node) {
     if (node == nullptr) return;
     inorder(node->left);
     printf("%d, ", node->val);
     inorder(node->right);
 }
 
-void postorder(BTNode *node) {
+void postorder(TreeNode *node) {
     if (node == nullptr) return;
     postorder(node->left);
     postorder(node->right);
@@ -99,17 +99,17 @@ void postorder(BTNode *node) {
 
 int main() {
     system("chcp 65001");
-    BTNode *root = new BTNode(
+    TreeNode *root = new TreeNode(
             8,
-            new BTNode(
+            new TreeNode(
                     5,
-                    new BTNode(2),
-                    new BTNode(6)
+                    new TreeNode(2),
+                    new TreeNode(6)
             ),
-            new BTNode(
+            new TreeNode(
                     10,
-                    new BTNode(9),
-                    new BTNode(11)
+                    new TreeNode(9),
+                    new TreeNode(11)
             )
     );
     postorder(root);

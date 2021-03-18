@@ -10,31 +10,31 @@ using namespace std;
 typedef long long ll;
 const double pi = acos(-1);
 
-class BTNode {
+class TreeNode {
 public:
     int val;
-    BTNode *left;
-    BTNode *right;
+    TreeNode *left;
+    TreeNode *right;
 
-    BTNode() {
+    TreeNode() {
         this->left = nullptr;
         this->right = nullptr;
         val = -1;
     };
 
-    BTNode(int val) {
+    TreeNode(int val) {
         this->left = nullptr;
         this->right = nullptr;
         this->val = val;
     };
 
-    BTNode(int val, BTNode *left, BTNode *right) {
+    TreeNode(int val, TreeNode *left, TreeNode *right) {
         this->left = left;
         this->right = right;
         this->val = val;
     };
 
-    void printBT(const std::string &prefix, const BTNode *node, bool isLeft) {
+    void printBT(const std::string &prefix, const TreeNode *node, bool isLeft) {
         if (node != nullptr) {
             std::cout << prefix;
 
@@ -57,13 +57,13 @@ public:
 int pre[LEN] = {8, 5, 2, 6, 10, 9, 11};
 int in[LEN] = {2, 5, 6, 8, 9, 10, 11};
 
-BTNode *build_tree(int ps, int pe, int is, int ie) {
+TreeNode *build_tree(int ps, int pe, int is, int ie) {
     if (ps > pe) return NULL;
-    if (ps == pe) return new BTNode(in[is]);
+    if (ps == pe) return new TreeNode(in[is]);
     int i = is;
     while (i <= ie && in[i] != pre[ps]) i++;
     // post -> pre ,  pe -> ps
-    BTNode *node = new BTNode(in[i]);
+    TreeNode *node = new TreeNode(in[i]);
     int n_left = i - is;    //左侧元素数量
     node->left = build_tree(ps + 1, ps + n_left, is, is + n_left - 1);
     node->right = build_tree(ps + n_left + 1, pe, i + 1, ie);
@@ -71,21 +71,21 @@ BTNode *build_tree(int ps, int pe, int is, int ie) {
     return node;
 }
 
-void preorder(BTNode *node) {
+void preorder(TreeNode *node) {
     if (node == nullptr) return;
     printf("%d, ", node->val);
     preorder(node->left);
     preorder(node->right);
 }
 
-void inorder(BTNode *node) {
+void inorder(TreeNode *node) {
     if (node == nullptr) return;
     inorder(node->left);
     printf("%d, ", node->val);
     inorder(node->right);
 }
 
-void postorder(BTNode *node) {
+void postorder(TreeNode *node) {
     if (node == nullptr) return;
     postorder(node->left);
     postorder(node->right);
@@ -94,17 +94,17 @@ void postorder(BTNode *node) {
 
 int main() {
     system("chcp 65001");
-    BTNode *root = new BTNode(
+    TreeNode *root = new TreeNode(
             8,
-            new BTNode(
+            new TreeNode(
                     5,
-                    new BTNode(2),
-                    new BTNode(6)
+                    new TreeNode(2),
+                    new TreeNode(6)
             ),
-            new BTNode(
+            new TreeNode(
                     10,
-                    new BTNode(9),
-                    new BTNode(11)
+                    new TreeNode(9),
+                    new TreeNode(11)
             )
     );
     preorder(root);
@@ -113,7 +113,7 @@ int main() {
     printf("\n");
     root->print();
     int n = 7;
-    BTNode *root_bd = build_tree(0, n - 1, 0, n - 1);
+    TreeNode *root_bd = build_tree(0, n - 1, 0, n - 1);
     root_bd->print();
     return 0;
 }
