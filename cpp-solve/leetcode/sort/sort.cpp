@@ -1,3 +1,4 @@
+//https://www.nowcoder.com/practice/2baf799ea0594abd974d37139de27896?tpId=196&tqId=37185&rp=1&ru=%2Factivity%2Foj&qru=%2Fta%2Fjob-code-total%2Fquestion-ranking&tab=answerKey
 #include "bits/stdc++.h"
 #include "vector_util.h"
 
@@ -41,6 +42,35 @@ class Heap {
 
 class Solution {
 public:
+    // -----------三个基本排序-----------------------------
+
+    void insert_sort(vector<int> &nums) {
+        //有序区的终点索引
+        int k = 0, n = nums.size();
+        for (int i = 1; i < n; ++i) {
+            if (nums[i] < nums[k]) {
+                //在有序区中找到第一个更大的元素
+                int j = 0;
+                while (j <= k and nums[j] < nums[i]) ++j;
+                int tmp = nums[i];
+                for (int p = i; p > j; --p) nums[p] = nums[p - 1];
+                nums[j] = tmp;
+            }
+            ++k;//更新有序区
+        }
+    }
+
+    void bubble_sort(vector<int> &nums) {
+        int n = nums.size();
+        for (int i = 0; i < n - 1; ++i) {
+            for (int j = 0; j < n - i - 1; ++j) {
+                if (nums[j] > nums[j + 1]) {
+                    swap(nums[j], nums[j + 1]);
+                }
+            }
+        }
+    }
+
     // -----------堆排序-----------------------------------
     void sink(vector<int> &nums, int k, int n) {
         while (true) {
