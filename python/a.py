@@ -1,24 +1,21 @@
 class Solution:
-    def addStrings(self, num1: str, num2: str) -> str:
-        l1 = len(num1)
-        l2 = len(num2)
-        i1 = l1 - 1
-        i2 = l2 - 1
-        carry = 0
-        base = 10
-        ans = ''
-        while i1 >= 0 or i2 >= 0 or carry:
-            a = int(num1[i1]) if i1 >= 0 else 0
-            b = int(num2[i2]) if i2 >= 0 else 0
-            sum_ = a + b + carry
-            print(sum_)
-            ans = ans + str(sum_ % base)
-            carry = sum_ // base
-            i1 -= 1
-            i2 -= 1
-
-        return ans[::-1]
-
-
-ans = Solution().addStrings("123", "456")
-print(ans)
+    def maxProfit(self, prices: List[int]) -> int:
+        if not prices:
+            return 0
+        N = len(prices)
+        K = 2
+        dp = [[[0] * 2 for _ in range(K + 1)] for _ in range(N + 1)]
+        # $1 天数 $2 最大交易数 $3 {0: 不持有, 1: 持有}
+        # dp[0][..][1]=-inf
+        for k in range(K + 1): # 开始时不能持有股票
+            dp[0][k][1] = -inf
+        # dp[..][0][1]=-inf
+        for i in range(N + 1):   
+            dp[i][0][1] = -inf
+        for i in range(1, N + 1):
+            for k in range(2, 0, -1):
+                # 卖
+                dp[i][k][0] = max(dp[i - 1][k][0], dp[i - 1][k][1] + prices[i - 1])
+                # 买
+                dp[i][k][1] = max(dp[i - 1][k][1], dp[i - 1][k - 1][0] - prices[i - 1])
+        return dp[N][2][0]

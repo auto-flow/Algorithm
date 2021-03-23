@@ -34,8 +34,8 @@ class DoubleLink {
 
     void addLast(Node x) {
         x.prev = tail.prev;
-        tail.prev.next = x;
         x.next = tail;
+        tail.prev.next = x;
         tail.prev = x;
         size++;
     }
@@ -90,6 +90,7 @@ class LRU {
     void removeKey(int k) {
         Node node = cache.get(k);
         link.remove(node);
+        cache.remove(k);
     }
 
     void removeLeastRecently() {
