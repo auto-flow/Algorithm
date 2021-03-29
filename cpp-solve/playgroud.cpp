@@ -7,7 +7,7 @@
 #define bug(x) cout<<#x<<"="<<x<<endl;
 
 using namespace std;
-typedef long long ll;
+typedef int ll;
 const double pi = acos(-1);
 
 int main(){

@@ -1,21 +1,35 @@
 class Solution:
-    def maxProfit(self, prices: List[int]) -> int:
-        if not prices:
-            return 0
-        N = len(prices)
-        K = 2
-        dp = [[[0] * 2 for _ in range(K + 1)] for _ in range(N + 1)]
-        # $1 天数 $2 最大交易数 $3 {0: 不持有, 1: 持有}
-        # dp[0][..][1]=-inf
-        for k in range(K + 1): # 开始时不能持有股票
-            dp[0][k][1] = -inf
-        # dp[..][0][1]=-inf
-        for i in range(N + 1):   
-            dp[i][0][1] = -inf
-        for i in range(1, N + 1):
-            for k in range(2, 0, -1):
-                # 卖
-                dp[i][k][0] = max(dp[i - 1][k][0], dp[i - 1][k][1] + prices[i - 1])
-                # 买
-                dp[i][k][1] = max(dp[i - 1][k][1], dp[i - 1][k - 1][0] - prices[i - 1])
-        return dp[N][2][0]
+
+    def __init__(self, w: List[int]):
+        N = len(w)
+        sum_ = sum(w)
+        prob = [p / sum_ for p in w]
+        alias = [0] * N
+        alias_prob = [p * N for p in prob]
+        small_q = []
+        large_q = []
+        for i, p in enumerate(alias_prob):
+            if p < 1:
+                small_q.append(i)
+            else:
+                large_q.append(i)
+        while small_q and large_q:
+            small = small_q.pop(0)
+            large = large_q.pop(0)
+            alias[small] = large
+            alias_prob[large] -= (1 - alias_prob[small])
+            if alias_prob[large] < 1:
+                small_q.append(large)
+            else:
+                large_q.append(large)
+        self.alias = alias
+        self.N = N
+        self.alias_prob = alias_prob
+
+    def pickIndex(self) -> int:
+        ix = random.randint(0, self.N - 1)
+        p = random.random()
+        if p < self.alias_prob[ix]:
+            return ix
+        else:
+            return self.alias[ix]

@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-typedef long long ll;
+typedef int ll;
 const double pi = acos(-1);
 
 class TreeNode {

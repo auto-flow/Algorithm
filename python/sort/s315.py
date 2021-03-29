@@ -7,28 +7,43 @@ class Solution:
         counts = [0] * len(nums)
         index = [i for i in range(len(nums))]
 
-        def Merge_sort(low, high):
-            if high - low < 2:
+        def merge_sort(l, r):
+            if l >= r:
                 return
-            mid = (high + low) // 2
-            Merge_sort(low, mid)
-            Merge_sort(mid, high)
-            tmp = mid
-            pre = low
-            res = []
-            while low < mid or tmp < high:
-                if low == mid or (tmp < high and nums[index[low]] <= nums[index[tmp]]):
-                    res.append(index[tmp])
-                    tmp += 1
+            mid = (r + l) // 2
+            merge_sort(l, mid)
+            merge_sort(mid + 1, r)
+            # 统计
+            b = mid + 1
+            for a in range(l, mid + 1):
+                while b <= r and nums[index[b]] < nums[index[a]]:
+                    b += 1
+                counts[index[a]] += b - mid - 1
+            # 归并
+            a = l
+            b = mid + 1
+            merged = []
+            while a <= mid and b <= r:
+                if nums[index[a]] <= nums[index[b]]:
+                    merged.append(index[a])
+                    a += 1
                 else:
-                    res.append(index[low])
-                    counts[index[low]] += high - tmp
-                    low += 1
+                    merged.append(index[b])
+                    b += 1
+            while a <= mid:
+                merged.append(index[a])
+                a += 1
+            while b <= r:
+                merged.append(index[b])
+                b += 1
+            index[l:r + 1] = merged
 
-            index[pre:high] = res
-
-        Merge_sort(0, len(nums))
+        merge_sort(0, len(nums) - 1)
+        # print(index)
         return counts
 
 
-print(Solution().countSmaller([5, 2, 6, 1]))
+nums = [5, 2, 6, 1]
+ans = Solution().countSmaller(nums)
+print(nums)
+print(ans)
