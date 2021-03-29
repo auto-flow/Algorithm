@@ -80,14 +80,6 @@ def run_test1():
     print(ans1)
     print(ans2)
 
-def run_test_many_cases(n_cases=100):
-    for _ in range(n_cases):
-        data=get_random_data()
-        print(data)
-        assert brute_force(data)==fix_maximum_method(data)
-    print('uni-test pass')
-
 
 if __name__ == '__main__':
     run_test1()
-    run_test_many_cases()
