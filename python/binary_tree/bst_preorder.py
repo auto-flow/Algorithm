@@ -28,6 +28,6 @@ def preorder(root):
     preorder(root.right)
 
 
-case1 = [3, 1, 2, 5, 4, 6]
-root = build_by_mono_stack(case1)
+preorder_seq = [3, 1, 2, 5, 4, 6]
+root = build_by_mono_stack(preorder_seq)
 preorder(root)
